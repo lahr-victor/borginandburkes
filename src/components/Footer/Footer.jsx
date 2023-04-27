@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 //  OBS: Trocar a primeira <div></div> que fecha a <p>Protudos</p> por <Link to=""></Link>
 //  quando rota de produtos estiver pronta
@@ -11,7 +12,7 @@ export default function Footer() {
         <p>Produtos</p>
       </div>
       <div>
-        <p>Carrinho</p>
+        <ShoppingCart />
       </div>
     </FooterContainer>
   );
