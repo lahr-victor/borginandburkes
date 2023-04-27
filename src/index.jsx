@@ -16,5 +16,5 @@ root.render(
     <ResetStyle />
     <GlobalStyle />
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
