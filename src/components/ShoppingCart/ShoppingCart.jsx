@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
+import { FaTrashAlt, FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
 
 export default function ShoppingCart() {
   const [show, setShow] = useState(false);
@@ -18,7 +19,23 @@ export default function ShoppingCart() {
         onRequestClose={handleClose}
       >
         <ModalWidow>
-          <p>Carrinho de compras:</p>
+          <CartTitle>Carrinho de compras:</CartTitle>
+          <ul>
+            <ShoppingCartItem>
+              <LeftElements>
+                <p>Velas Venenosas</p>
+                <p>x1</p>
+                <PlusMinusItem>
+                  <FaMinusCircle />
+                  <FaPlusCircle />
+                </PlusMinusItem>
+              </LeftElements>
+              <RightElements>
+                <p>R$ 15,98</p>
+                <FaTrashAlt />
+              </RightElements>
+            </ShoppingCartItem>
+          </ul>
           <button type="button" onClick={handleClose}>
             <p>Finalizar</p>
           </button>
@@ -30,6 +47,22 @@ export default function ShoppingCart() {
     </>
   );
 }
+
+const ShoppingCartItem = styled.li`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    p{
+        font-family: 'Lora';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+    }
+`;
+const LeftElements = styled.div``;
+const PlusMinusItem = styled.div``;
+const RightElements = styled.div``;
 
 const Cart = styled.button`
     background-color: transparent;
@@ -50,6 +83,13 @@ const AddMore = styled.button`
 `;
 
 const ModalWidow = styled.div`
-display: flex;
-flex-direction: column;
+    display: flex;
+    flex-direction: column;
+`;
+
+const CartTitle = styled.p`
+    font-family: 'Lora';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
 `;
