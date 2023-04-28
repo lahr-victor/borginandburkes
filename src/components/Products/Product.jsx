@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IoMdCart } from 'react-icons/io';
-import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 export default function Product({
   productId,
