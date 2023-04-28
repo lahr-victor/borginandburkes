@@ -168,6 +168,7 @@ const LeftElements = styled.div`
 const PlusMinusItem = styled.div`
   display: flex;
   gap: 5px;
+  cursor: pointer;
 `;
 
 const RightElements = styled.div`
