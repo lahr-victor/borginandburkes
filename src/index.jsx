@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 // VALUE IMPORTS
-import App from './components/App';
+import App from './App';
 import GlobalStyle from './assets/styles/GlobalStyle';
 import ResetStyle from './assets/styles/ResetStyle';
 

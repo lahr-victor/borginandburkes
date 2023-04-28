@@ -20,6 +20,8 @@ export default function Header() {
 }
 
 const HeaderContainer = styled.div`
+    top: 0;
+    left: 0;
     position: fixed;
     width: 100%;
 `;
