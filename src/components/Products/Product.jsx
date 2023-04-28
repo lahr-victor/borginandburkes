@@ -16,6 +16,18 @@ export default function Product({
 
     if (alreadyOnCart) {
       console.log(`${title} is already on cart. Adding one more.`);
+      const add = shoppingCart.items.map(
+        (item) => {
+          if (item.productId === id) {
+            return ({ ...item, qty: item.qty + quantity });
+          }
+          return ({ ...item });
+        },
+      );
+      const sum = add.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
+
+      setShoppingCart({ ...shoppingCart, items: add, total: sum });
+      return;
     }
 
     console.log(`${title} added to cart.`);
@@ -28,12 +40,12 @@ export default function Product({
     };
 
     //  console.log(shoppingCart.items);
-    const updatedCart = [...shoppingCart.items, product];
+    const updt = [...shoppingCart.items, product];
     // eslint-disable-next-line max-len
 
-    const sum = updatedCart.reduce((accumulator, object) => accumulator + object.price, 0);
+    const sum = updt.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
 
-    setShoppingCart({ ...shoppingCart, items: updatedCart, total: sum });
+    setShoppingCart({ ...shoppingCart, items: updt, total: sum });
   }
 
   return (
