@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
@@ -9,7 +10,11 @@ export default function Header() {
           Borgin &  Burkes
         </Logo>
       </HeaderLogo>
-      <HeaderMenu />
+      <HeaderMenu>
+        <Link to="/sign-in">Entre</Link>
+        ou
+        <Link to="/sign-up">Cadastre-se</Link>
+      </HeaderMenu>
     </HeaderContainer>
   );
 }
@@ -38,4 +43,17 @@ const Logo = styled.p`
 const HeaderMenu = styled.div`
     height: 35px;
     background-color: #3A3A3A;
+    color: #f9f9f9;
+    display:flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap:5px;
+    padding:10px;
+    font-size:15px;
+    line-height: 18px;
+    a {
+      color: #f9f9f9;
+      padding-top:0px;
+      font-size:15px;
+    }
 `;
