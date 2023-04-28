@@ -10,16 +10,15 @@ export default function Product({
   setShoppingCart,
 }) {
   function handleCart(id) {
-    const quantity = 1;
+    const MIN_QTY = 1;
 
     const alreadyOnCart = shoppingCart.items.find((item) => item.productId === id);
 
     if (alreadyOnCart) {
-      console.log(`${title} is already on cart. Adding one more.`);
       const add = shoppingCart.items.map(
         (item) => {
           if (item.productId === id) {
-            return ({ ...item, qty: item.qty + quantity });
+            return ({ ...item, qty: item.qty + MIN_QTY });
           }
           return ({ ...item });
         },
@@ -30,13 +29,11 @@ export default function Product({
       return;
     }
 
-    console.log(`${title} added to cart.`);
-
     const product = {
       productId,
       title,
       price,
-      qty: quantity,
+      qty: MIN_QTY,
     };
 
     //  console.log(shoppingCart.items);

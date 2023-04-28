@@ -8,7 +8,49 @@ export default function ShoppingCart() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { shoppingCart } = useContext(CartContext);
+  const { shoppingCart, setShoppingCart } = useContext(CartContext);
+  const MIN_QTY = 1;
+
+  function increaseQty(id) {
+    const add = shoppingCart.items.map(
+      (item) => {
+        if (item.productId === id) {
+          return ({ ...item, qty: item.qty + MIN_QTY });
+        }
+        return ({ ...item });
+      },
+    );
+    const sum = add.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
+
+    setShoppingCart({ ...shoppingCart, items: add, total: sum });
+  }
+
+  function removeFromCart(id) {
+    const filter = shoppingCart.items.filter((object) => object.productId !== id);
+    const sum = filter.reduce((acc, object) => acc + (object.price * object.qty), 0);
+    setShoppingCart({ ...shoppingCart, items: filter, total: sum });
+  }
+
+  function decreaseQty(id) {
+    const query = shoppingCart.items.find((item) => item.productId === id);
+
+    if (query.qty <= MIN_QTY) {
+      removeFromCart(id);
+      return;
+    }
+
+    const red = shoppingCart.items.map(
+      (item) => {
+        if (item.productId === id) {
+          return ({ ...item, qty: item.qty - MIN_QTY });
+        }
+        return ({ ...item });
+      },
+    );
+    const sum = red.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
+
+    setShoppingCart({ ...shoppingCart, items: red, total: sum });
+  }
 
   return (
     <>
@@ -29,8 +71,8 @@ export default function ShoppingCart() {
                       {object.qty}
                     </p>
                     <PlusMinusItem>
-                      <FaMinusCircle />
-                      <FaPlusCircle />
+                      <FaMinusCircle onClick={() => decreaseQty(object.productId)} />
+                      <FaPlusCircle onClick={() => increaseQty(object.productId)} />
                     </PlusMinusItem>
                   </LeftElements>
                   <RightElements>
@@ -38,7 +80,7 @@ export default function ShoppingCart() {
                       R$&nbsp;
                       {object.price}
                     </p>
-                    <FaTrashAlt />
+                    <FaTrashAlt onClick={() => removeFromCart(object.productId)} />
                   </RightElements>
                 </ShoppingCartItem>
               )) : <p>Não há produtos no carrinho ainda.</p>}
