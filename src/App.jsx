@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 // PACKAGE IMPORTS
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -17,9 +18,20 @@ export default function App() {
       total: 0,
     },
   );
+  const [orderIdentifier, setOrderIdentifier] = useState();
+  const [orderDetails, setOrderDetails] = useState([]);
 
   return (
-    <CartContext.Provider value={{ shoppingCart, setShoppingCart }}>
+    <CartContext.Provider value={
+      {
+        shoppingCart,
+        setShoppingCart,
+        orderIdentifier,
+        setOrderIdentifier,
+        orderDetails,
+        setOrderDetails,
+      }
+   }>
       <BrowserRouter>
         <Header />
         <Routes>

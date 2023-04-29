@@ -1,5 +1,7 @@
 import axios from 'axios';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CartContext from '../contexts/cartContext';
 
 export function useSignUp() {
   const navigate = useNavigate();
@@ -29,12 +31,13 @@ export function useSignIn() {
 
 export function useAddOrder() {
   const navigate = useNavigate();
+  const { setOrderIdentifier } = useContext(CartContext);
 
   return (body, config) => {
     axios.post(`${process.env.REACT_APP_API_URL}/orders`, body, config)
       .then((res) => {
         // eslint-disable-next-line no-console
-        console.log(res.data);
+        setOrderIdentifier(res.data.insertedId);
         navigate('/order-details');
       })
     // eslint-disable-next-line no-alert
