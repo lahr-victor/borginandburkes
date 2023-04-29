@@ -17,7 +17,7 @@ export function useSignUp() {
 
 export function useSignIn() {
   const navigate = useNavigate();
-  const { setUserName} = useContext(UserNameContext);
+  const { setUserName } = useContext(UserNameContext);
 
   return (body) => {
     axios.post(`${process.env.REACT_APP_API_URL}/sign-in`, body)

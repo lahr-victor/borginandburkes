@@ -6,8 +6,6 @@ import UserNameContext from '../../contexts/userNameContext';
 export default function Header() {
   const { userName } = useContext(UserNameContext);
 
-  console.log(userName);
-
   return (
     <HeaderContainer>
       <HeaderLogo>

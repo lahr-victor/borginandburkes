@@ -9,7 +9,7 @@ import SignUpPage from './pages/signUp/SignUpPages';
 import ProductsPage from './pages/products/ProductsPages';
 import CartContext from './contexts/cartContext';
 import OrderDetails from './pages/orders/OrdersDetails';
-import UserNameContext from './contexts/userNameContext.js';
+import UserNameContext from './contexts/userNameContext';
 
 // VALUE EXPORTS
 export default function App() {
