@@ -7,6 +7,7 @@ import SignInPage from './pages/signIn/SignInPages';
 import SignUpPage from './pages/signUp/SignUpPages';
 import ProductsPage from './pages/products/ProductsPages';
 import CartContext from './contexts/cartContext';
+import OrderDetails from './pages/orders/OrdersDetails';
 
 // VALUE EXPORTS
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/" element={<ProductsPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/order-details" element={<OrderDetails />} />
         </Routes>
       </BrowserRouter>
       <Footer />
