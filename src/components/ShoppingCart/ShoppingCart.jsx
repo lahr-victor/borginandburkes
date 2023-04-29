@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import { FaTrashAlt, FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import CartContext from '../../contexts/cartContext';
 
 export default function ShoppingCart() {
@@ -9,6 +10,7 @@ export default function ShoppingCart() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { shoppingCart, setShoppingCart } = useContext(CartContext);
+  const navigate = useNavigate();
   const MIN_QTY = 1;
 
   function increaseQty(id) {
@@ -52,6 +54,33 @@ export default function ShoppingCart() {
     setShoppingCart({ ...shoppingCart, items: red, total: sum });
   }
 
+  function finishOrder() {
+    if (shoppingCart.items.length === 0) {
+      alert('O carrinho não pode estar vazio. Por favor adicione mais produtos.'); // eslint-disable-line no-alert
+      return;
+    }
+
+    if (!localStorage.getItem('user')) {
+      handleClose();
+      navigate('/sign-in');
+      return;
+    }
+
+    handleClose();
+
+    const userData = JSON.parse(localStorage.getItem('user'));
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+    const body = shoppingCart;
+    console.log(config);
+    console.log(shoppingCart);
+    navigate('/order-details');
+  }
+
+  function addMoreProducts() {
+    handleClose();
+    navigate('/');
+  }
+
   return (
     <>
       <Cart onClick={handleShow}>
@@ -93,10 +122,10 @@ export default function ShoppingCart() {
             </p>
           </Total>
           <ShoppingCartBottomMenu>
-            <Finalizar type="button" onClick={handleClose}>
+            <Finalizar type="button" onClick={() => finishOrder()}>
               <p>Finalizar</p>
             </Finalizar>
-            <Close type="button" onClick={handleClose}>
+            <Close type="button" onClick={() => addMoreProducts()}>
               <Voltar>Adicionar mais produtos</Voltar>
             </Close>
           </ShoppingCartBottomMenu>

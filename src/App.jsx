@@ -28,8 +28,8 @@ export default function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/order-details" element={<OrderDetails />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </CartContext.Provider>
   );
 }
