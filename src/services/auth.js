@@ -26,3 +26,17 @@ export function useSignIn() {
       .catch((err) => alert(err.response.data));
   };
 }
+
+export function useAddOrder() {
+  const navigate = useNavigate();
+
+  return (body, config) => {
+    axios.post(`${process.env.REACT_APP_API_URL}/orders`, body, config)
+      .then((res) => {
+        console.log(res.data);
+        navigate('/order-details');
+      })
+    // eslint-disable-next-line no-alert
+      .catch((err) => alert(err.response.data));
+  };
+}

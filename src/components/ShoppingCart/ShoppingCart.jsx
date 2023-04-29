@@ -4,6 +4,7 @@ import ReactModal from 'react-modal';
 import { FaTrashAlt, FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import CartContext from '../../contexts/cartContext';
+import { useAddOrder } from '../../services/auth';
 
 export default function ShoppingCart() {
   const [show, setShow] = useState(false);
@@ -11,25 +12,28 @@ export default function ShoppingCart() {
   const handleShow = () => setShow(true);
   const { shoppingCart, setShoppingCart } = useContext(CartContext);
   const navigate = useNavigate();
+  const addOrder = useAddOrder();
+
   const MIN_QTY = 1;
 
   function increaseQty(id) {
     const add = shoppingCart.items.map(
       (item) => {
         if (item.productId === id) {
-          return ({ ...item, qty: item.qty + MIN_QTY });
+          // eslint-disable-next-line max-len
+          return ({ ...item, qty: item.qty + MIN_QTY, price: item.price + (item.price / item.qty) });
         }
         return ({ ...item });
       },
     );
-    const sum = add.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
+    const sum = add.reduce((accumulator, object) => accumulator + object.price, 0);
 
     setShoppingCart({ ...shoppingCart, items: add, total: sum });
   }
 
   function removeFromCart(id) {
     const filter = shoppingCart.items.filter((object) => object.productId !== id);
-    const sum = filter.reduce((acc, object) => acc + (object.price * object.qty), 0);
+    const sum = filter.reduce((acc, object) => acc + object.price, 0);
     setShoppingCart({ ...shoppingCart, items: filter, total: sum });
   }
 
@@ -44,12 +48,13 @@ export default function ShoppingCart() {
     const red = shoppingCart.items.map(
       (item) => {
         if (item.productId === id) {
-          return ({ ...item, qty: item.qty - MIN_QTY });
+          // eslint-disable-next-line max-len
+          return ({ ...item, qty: item.qty - MIN_QTY, price: item.price - (item.price / item.qty) });
         }
         return ({ ...item });
       },
     );
-    const sum = red.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
+    const sum = red.reduce((accumulator, object) => accumulator + object.price, 0);
 
     setShoppingCart({ ...shoppingCart, items: red, total: sum });
   }
@@ -66,14 +71,13 @@ export default function ShoppingCart() {
       return;
     }
 
-    handleClose();
-
+    const body = shoppingCart;
+    console.log(shoppingCart);
     const userData = JSON.parse(localStorage.getItem('user'));
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
-    const body = shoppingCart;
-    console.log(config);
-    console.log(shoppingCart);
-    navigate('/order-details');
+
+    addOrder(body, config);
+    handleClose();
   }
 
   function addMoreProducts() {
