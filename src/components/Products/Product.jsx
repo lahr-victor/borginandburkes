@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import { IoMdCart } from 'react-icons/io';
@@ -18,12 +19,13 @@ export default function Product({
       const add = shoppingCart.items.map(
         (item) => {
           if (item.productId === id) {
-            return ({ ...item, qty: item.qty + MIN_QTY });
+            // eslint-disable-next-line max-len
+            return ({ ...item, qty: item.qty + MIN_QTY, price: item.price + (item.price / item.qty) });
           }
           return ({ ...item });
         },
       );
-      const sum = add.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
+      const sum = add.reduce((accumulator, object) => accumulator + object.price, 0);
 
       setShoppingCart({ ...shoppingCart, items: add, total: sum });
       return;

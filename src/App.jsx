@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 // PACKAGE IMPORTS
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -7,6 +8,8 @@ import SignInPage from './pages/signIn/SignInPages';
 import SignUpPage from './pages/signUp/SignUpPages';
 import ProductsPage from './pages/products/ProductsPages';
 import CartContext from './contexts/cartContext';
+import OrderDetails from './pages/orders/OrdersDetails';
+import UserNameContext from './contexts/userNameContext';
 
 // VALUE EXPORTS
 export default function App() {
@@ -16,18 +19,33 @@ export default function App() {
       total: 0,
     },
   );
+  const [orderIdentifier, setOrderIdentifier] = useState();
+  const [orderDetails, setOrderDetails] = useState([]);
+  const [userName, setUserName] = useState(JSON.parse(localStorage.getItem('user')));
 
   return (
-    <CartContext.Provider value={{ shoppingCart, setShoppingCart }}>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<ProductsPage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
-        </Routes>
-      </BrowserRouter>
-      <Footer />
+    <CartContext.Provider value={
+      {
+        shoppingCart,
+        setShoppingCart,
+        orderIdentifier,
+        setOrderIdentifier,
+        orderDetails,
+        setOrderDetails,
+      }
+   }>
+      <UserNameContext.Provider value={{ userName, setUserName }}>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<ProductsPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/order-details" element={<OrderDetails />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </UserNameContext.Provider>
     </CartContext.Provider>
   );
 }

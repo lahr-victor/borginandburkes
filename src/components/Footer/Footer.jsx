@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 //  OBS: Trocar a primeira <div></div> que fecha a <p>Protudos</p> por <Link to=""></Link>
@@ -9,7 +10,9 @@ export default function Footer() {
   return (
     <FooterContainer>
       <div>
-        <p>Produtos</p>
+        <Link to="/">
+          <p>Produtos</p>
+        </Link>
       </div>
       <div>
         <ShoppingCart />

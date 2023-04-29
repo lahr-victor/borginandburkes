@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import UserNameContext from '../../contexts/userNameContext';
 
 export default function Header() {
+  const { userName } = useContext(UserNameContext);
+
   return (
     <HeaderContainer>
       <HeaderLogo>
@@ -10,11 +13,22 @@ export default function Header() {
           Borgin &  Burkes
         </Logo>
       </HeaderLogo>
-      <HeaderMenu>
-        <Link to="/sign-in">Entre</Link>
-        ou
-        <Link to="/sign-up">Cadastre-se</Link>
-      </HeaderMenu>
+      {userName
+        ? (
+          <HeaderMenu>
+            <p>
+              Olá,
+              {' '}
+              {userName.name}
+            </p>
+          </HeaderMenu>
+        ) : (
+          <HeaderMenu>
+            <Link to="/sign-in">Entre</Link>
+            ou
+            <Link to="/sign-up">Cadastre-se</Link>
+          </HeaderMenu>
+        )}
     </HeaderContainer>
   );
 }
