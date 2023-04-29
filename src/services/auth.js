@@ -33,6 +33,7 @@ export function useAddOrder() {
   return (body, config) => {
     axios.post(`${process.env.REACT_APP_API_URL}/orders`, body, config)
       .then((res) => {
+        // eslint-disable-next-line no-console
         console.log(res.data);
         navigate('/order-details');
       })
