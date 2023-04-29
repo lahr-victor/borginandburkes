@@ -24,12 +24,22 @@ export function useSignIn() {
       .then((res) => {
         const { token, name, userType } = res.data;
         localStorage.setItem('user', JSON.stringify({ token, name, userType }));
+        const user = JSON.parse(localStorage.getItem('user'));
+        // eslint-disable-next-line no-console
+        console.log(user);
+        // eslint-disable-next-line no-console
+        console.log(user.token);
         setUserName(JSON.parse(localStorage.getItem('user')));
         navigate('/');
       })
     // eslint-disable-next-line no-alert
       .catch((err) => alert(err.response.data));
   };
+}
+
+export function useLogout() {
+  // eslint-disable-next-line no-console
+  console.log('ta funcioonando sei la poq');
 }
 
 export function useAddOrder() {
