@@ -5,7 +5,9 @@ import axios from 'axios';
 import CartContext from '../../contexts/cartContext';
 
 export default function OrderDetails() {
-  const { orderIdentifier, setOrderDetails, orderDetails } = useContext(CartContext);
+  const {
+    orderIdentifier, setOrderDetails, orderDetails, setShoppingCart,
+  } = useContext(CartContext);
   const INITIAL_VALUE = 0;
 
   function getOrderById() {
@@ -20,67 +22,105 @@ export default function OrderDetails() {
 
   useEffect(() => {
     getOrderById();
-    console.log(orderDetails);
+    setShoppingCart(
+      {
+        items: [],
+        total: 0,
+      },
+    );
   }, []);
 
-  function tally() {
-    orderDetails[INITIAL_VALUE].items.map(
-      (item) => console.log(item.title),
-    );
-  }
-
   return (
-    <OrderContainer>
-      <OrderIdentifier>
-        <p>Pedido</p>
-        {orderDetails && orderDetails.length > 0 ? <p>{orderDetails[INITIAL_VALUE]._id}</p> : <p />}
-      </OrderIdentifier>
-      {orderDetails && orderDetails.length > 0
-        ? orderDetails[INITIAL_VALUE].items.map(
-          (item) => (
-            <OrderProducts key={item.productId}>
-              <ProductTitleQty>
-                <p>{item.title}</p>
-                <p>
-                  {item.qty}
-                  x
-                </p>
-              </ProductTitleQty>
-              <ProductPrice>
-                <p>
-                  R$
-                  {' '}
-                  {item.price}
-                </p>
-              </ProductPrice>
-            </OrderProducts>
-          ),
-        )
-        : <p />}
-      <OrderTotal>
-        <p>Total</p>
-        {orderDetails.length > 0 ? (
-          <p>
-            R$
-            {' '}
-            {orderDetails[INITIAL_VALUE].total}
-          </p>
-        ) : <p />}
-      </OrderTotal>
-    </OrderContainer>
+    <OrderOuterContainer>
+      <OrderInnerContainer>
+        <OrderIdentifier>
+          <div>
+            <p>Pedido</p>
+            {orderDetails && orderDetails.length > 0 ? (
+              <p>
+                #
+                {orderDetails[INITIAL_VALUE]._id}
+              </p>
+            ) : <p />}
+          </div>
+        </OrderIdentifier>
+        {orderDetails && orderDetails.length > 0
+          ? orderDetails[INITIAL_VALUE].items.map(
+            (item) => (
+              <OrderProducts key={item.productId}>
+                <ProductTitleQty>
+                  <p>{item.title}</p>
+                  <p>
+                    {item.qty}
+                    x
+                  </p>
+                </ProductTitleQty>
+                <ProductPrice>
+                  <p>
+                    {item.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                  </p>
+                </ProductPrice>
+              </OrderProducts>
+            ),
+          )
+          : <p />}
+        <OrderTotal>
+          <p>Total</p>
+          {orderDetails.length > 0 ? (
+            <p>
+              {orderDetails[INITIAL_VALUE].total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+            </p>
+          ) : <p />}
+        </OrderTotal>
+      </OrderInnerContainer>
+    </OrderOuterContainer>
   );
 }
 
-const OrderContainer = styled.div`
-margin-top: 105px;
+const OrderOuterContainer = styled.div`
+display: flex;
+justify-content: center;
 `;
 
-const OrderIdentifier = styled.div``;
+const OrderInnerContainer = styled.div`
+margin-top: 105px;
+display: flex;
+flex-direction: column;
+`;
 
-const OrderProducts = styled.div``;
+const OrderIdentifier = styled.div`
+display: flex;
+justify-content: center;
+div{
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+p{
+    font-family: 'Lora';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;}
+`;
 
-const OrderTotal = styled.div``;
+const OrderProducts = styled.div`
+display: flex;
+justify-content: space-between;
+margin-bottom: 10px;`;
 
-const ProductTitleQty = styled.div``;
+const OrderTotal = styled.div`
+display: flex;
+justify-content: space-between;
+margin-top: 10px;
+p{
+font-family: 'Lora';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+}`;
+
+const ProductTitleQty = styled.div`
+display: flex;
+flex-direction: column;
+`;
 
 const ProductPrice = styled.div``;
