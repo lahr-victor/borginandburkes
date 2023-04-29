@@ -9,6 +9,7 @@ import SignUpPage from './pages/signUp/SignUpPages';
 import ProductsPage from './pages/products/ProductsPages';
 import CartContext from './contexts/cartContext';
 import OrderDetails from './pages/orders/OrdersDetails';
+import UserNameContext from './contexts/userNameContext.js';
 
 // VALUE EXPORTS
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
   );
   const [orderIdentifier, setOrderIdentifier] = useState();
   const [orderDetails, setOrderDetails] = useState([]);
+  const [userName, setUserName] = useState(JSON.parse(localStorage.getItem('user')));
 
   return (
     <CartContext.Provider value={
@@ -32,16 +34,18 @@ export default function App() {
         setOrderDetails,
       }
    }>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<ProductsPage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
-          <Route path="/order-details" element={<OrderDetails />} />
-        </Routes>
-        <Footer />
-      </BrowserRouter>
+      <UserNameContext.Provider value={{ userName, setUserName }}>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<ProductsPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+            <Route path="/order-details" element={<OrderDetails />} />
+          </Routes>
+          <Footer />
+        </BrowserRouter>
+      </UserNameContext.Provider>
     </CartContext.Provider>
   );
 }
