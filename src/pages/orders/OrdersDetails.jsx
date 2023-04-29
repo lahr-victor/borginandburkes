@@ -12,13 +12,14 @@ export default function OrderDetails() {
 
     const promise = axios.get(`${process.env.REACT_APP_API_URL}/orders/${orderIdentifier}`, config);
     promise.then((res) => setOrderDetails(res.data));
+    // eslint-disable-next-line no-alert
     promise.catch((err) => alert(err.response.data));
   }
 
   useEffect(() => {
     getOrderById();
     console.log(orderDetails);
-  }, [orderDetails]);
+  }, []);
 
   return (
     <OrderContainer>
@@ -28,6 +29,7 @@ export default function OrderDetails() {
       </OrderIdentifier>
       <OrderProducts>
         <ProductTitleQty>
+          <button type="button" onClick={() => console.log(orderDetails)}>Aqui!</button>
           <p>Velas Venenosas</p>
           <p>
             1x

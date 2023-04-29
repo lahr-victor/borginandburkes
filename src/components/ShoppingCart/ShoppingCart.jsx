@@ -72,7 +72,6 @@ export default function ShoppingCart() {
     }
 
     const body = shoppingCart;
-    console.log(shoppingCart);
     const userData = JSON.parse(localStorage.getItem('user'));
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
