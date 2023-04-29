@@ -37,11 +37,6 @@ export function useSignIn() {
   };
 }
 
-export function useLogout() {
-  // eslint-disable-next-line no-console
-  console.log('ta funcioonando sei la poq');
-}
-
 export function useAddOrder() {
   const navigate = useNavigate();
   const { setOrderIdentifier } = useContext(CartContext);
