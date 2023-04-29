@@ -24,11 +24,6 @@ export function useSignIn() {
       .then((res) => {
         const { token, name, userType } = res.data;
         localStorage.setItem('user', JSON.stringify({ token, name, userType }));
-        const user = JSON.parse(localStorage.getItem('user'));
-        // eslint-disable-next-line no-console
-        console.log(user);
-        // eslint-disable-next-line no-console
-        console.log(user.token);
         setUserName(JSON.parse(localStorage.getItem('user')));
         navigate('/');
       })
