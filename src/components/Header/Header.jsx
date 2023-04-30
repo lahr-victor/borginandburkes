@@ -1,10 +1,27 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { MdLogout } from 'react-icons/md';
 import UserNameContext from '../../contexts/userNameContext';
 
 export default function Header() {
-  const { userName } = useContext(UserNameContext);
+  const { userName, setUserName } = useContext(UserNameContext);
+
+  function logout() {
+    const body = {};
+    axios.post(
+      `${process.env.REACT_APP_API_URL}/logout`,
+      body,
+      { headers: { Authorization: `Bearer ${userName.token}` } },
+    )
+      .then(() => {
+        setUserName(undefined);
+        localStorage.clear();
+      })
+      // eslint-disable-next-line no-alert
+      .catch((err) => alert(err.response.data));
+  }
 
   return (
     <HeaderContainer>
@@ -16,17 +33,23 @@ export default function Header() {
       {userName
         ? (
           <HeaderMenu>
-            <p>
-              Olá,
-              {' '}
-              {userName.name}
-            </p>
+            <div>
+              <p>
+                Olá,
+                {' '}
+                {userName.name}
+              </p>
+            </div>
+            {/* eslint-disable-next-line react/jsx-no-bind */}
+            <MdLogout onClick={logout} />
           </HeaderMenu>
         ) : (
           <HeaderMenu>
-            <Link to="/sign-in">Entre</Link>
-            ou
-            <Link to="/sign-up">Cadastre-se</Link>
+            <div>
+              <Link to="/sign-in">Entre</Link>
+              ou
+              <Link to="/sign-up">Cadastre-se</Link>
+            </div>
           </HeaderMenu>
         )}
     </HeaderContainer>
@@ -63,10 +86,14 @@ const HeaderMenu = styled.div`
     display:flex;
     justify-content: flex-end;
     align-items: center;
-    gap:5px;
+    gap:20px;
     padding:10px;
     font-size:15px;
     line-height: 18px;
+    div {
+      display:flex;
+      gap: 5px;
+    }
     a {
       color: #f9f9f9;
       padding-top:0px;
