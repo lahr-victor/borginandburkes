@@ -32,7 +32,7 @@ export default function ProductsPage() {
       {products.map((product) => (
         <Product
           // eslint-disable-next-line no-underscore-dangle
-          productId={product._id.toString()}
+          id={product._id.toString()}
           title={product.title}
           image={product.image}
           price={product.price}

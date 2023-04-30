@@ -9,46 +9,46 @@ import CartContext from '../../contexts/cartContext';
 // VALUE EXPORTS
 /* eslint react/prop-types: 0 */
 export default function Product({
-  productId,
+  id,
   title,
   image,
   price,
 }) {
   const { shoppingCart, setShoppingCart } = useContext(CartContext);
 
-  function handleCart(id) {
+  function addToCart() {
     const MIN_QTY = 1;
 
-    const alreadyOnCart = shoppingCart.items.find((item) => item.productId === id);
-
+    const alreadyOnCart = shoppingCart.items.find((item) => item.id === id);
     if (alreadyOnCart) {
-      const add = shoppingCart.items.map(
-        (item) => {
-          if (item.productId === id) {
-            return ({ ...item, qty: item.qty + MIN_QTY });
-          }
-          return ({ ...item });
-        },
-      );
-      const sum = add.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
+      const updatedItems = shoppingCart.items.map((item) => {
+        if (item.id === id) {
+          return ({
+            ...item,
+            qty: item.qty + MIN_QTY,
+            price: item.price,
+          });
+        }
+        return ({ ...item });
+      });
 
-      setShoppingCart({ ...shoppingCart, items: add, total: sum });
-      return;
+      setShoppingCart({
+        items: updatedItems,
+      });
+    } else {
+      const newItem = {
+        id,
+        title,
+        qty: MIN_QTY,
+        price,
+      };
+
+      setShoppingCart({
+        items: [...shoppingCart.items, newItem],
+      });
     }
-
-    const product = {
-      productId,
-      title,
-      price,
-      qty: MIN_QTY,
-    };
-
     // eslint-disable-next-line no-console
-    console.log(shoppingCart.items);
-    const updt = [...shoppingCart.items, product];
-    const sum = updt.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
-
-    setShoppingCart({ ...shoppingCart, items: updt, total: sum });
+    console.log(shoppingCart);
   }
 
   return (
@@ -57,7 +57,7 @@ export default function Product({
       <img src={image} alt={title} />
       <p>
         {price}
-        <CartButton type="button" onClick={() => handleCart(productId)}>
+        <CartButton type="button" onClick={() => addToCart()}>
           <IoMdCart />
         </CartButton>
       </p>
