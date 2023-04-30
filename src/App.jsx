@@ -1,12 +1,14 @@
 // PACKAGE IMPORTS
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// VALUE IMPORTS
+import CartContext from './contexts/cartContext';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
+import ProductsPage from './pages/products/ProductsPage';
 import SignInPage from './pages/signIn/SignInPages';
 import SignUpPage from './pages/signUp/SignUpPages';
-import ProductsPage from './pages/products/ProductsPages';
-import CartContext from './contexts/cartContext';
 
 // VALUE EXPORTS
 export default function App() {
@@ -18,16 +20,18 @@ export default function App() {
   );
 
   return (
-    <CartContext.Provider value={{ shoppingCart, setShoppingCart }}>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<ProductsPage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
-        </Routes>
-      </BrowserRouter>
-      <Footer />
-    </CartContext.Provider>
+    useMemo(() => (
+      <CartContext.Provider value={{ shoppingCart, setShoppingCart }}>
+        <BrowserRouter>
+          <Header />
+          <Routes>
+            <Route path="/" element={<ProductsPage />} />
+            <Route path="/sign-in" element={<SignInPage />} />
+            <Route path="/sign-up" element={<SignUpPage />} />
+          </Routes>
+        </BrowserRouter>
+        <Footer />
+      </CartContext.Provider>
+    ), [shoppingCart, setShoppingCart])
   );
 }

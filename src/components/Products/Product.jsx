@@ -1,14 +1,21 @@
-import React from 'react';
+// PACKAGE IMPORTS
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { IoMdCart } from 'react-icons/io';
 
+// VALUE IMPORTS
+import CartContext from '../../contexts/cartContext';
+
+// VALUE EXPORTS
+/* eslint react/prop-types: 0 */
 export default function Product({
   productId,
   title,
+  image,
   price,
-  shoppingCart,
-  setShoppingCart,
 }) {
+  const { shoppingCart, setShoppingCart } = useContext(CartContext);
+
   function handleCart(id) {
     const MIN_QTY = 1;
 
@@ -36,34 +43,34 @@ export default function Product({
       qty: MIN_QTY,
     };
 
-    //  console.log(shoppingCart.items);
+    // eslint-disable-next-line no-console
+    console.log(shoppingCart.items);
     const updt = [...shoppingCart.items, product];
-    // eslint-disable-next-line max-len
-
     const sum = updt.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
 
     setShoppingCart({ ...shoppingCart, items: updt, total: sum });
   }
 
   return (
-    <ProductsContainer>
-      <p>{title}</p>
+    <ProductContainer>
+      <h2>{title}</h2>
+      <img src={image} alt={title} />
       <p>
-        R$&nbsp;
         {price}
-        <CartButton onClick={() => handleCart(productId)}>
+        <CartButton type="button" onClick={() => handleCart(productId)}>
           <IoMdCart />
         </CartButton>
       </p>
-    </ProductsContainer>
+    </ProductContainer>
   );
 }
 
+// STYLED COMPONENTS
 const CartButton = styled.button`
 cursor:pointer;
 `;
 
-const ProductsContainer = styled.div`
+const ProductContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
