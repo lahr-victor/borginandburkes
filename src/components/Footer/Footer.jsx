@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // PACKAGE IMPORTS
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,8 @@ import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 // VALUE EXPORTS
 export default function Footer() {
+  const userType = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).userType : 'user';
+
   return (
     <FooterContainer>
       <div>
@@ -16,7 +19,13 @@ export default function Footer() {
         </Link>
       </div>
       <div>
-        <ShoppingCart />
+        {
+          userType === 'admin' ? (
+            <Link to="/product-registration">
+              <p>Registrar</p>
+            </Link>
+          ) : <ShoppingCart />
+        }
       </div>
     </FooterContainer>
   );
