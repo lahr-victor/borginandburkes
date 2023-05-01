@@ -6,7 +6,7 @@ import CartContext from '../../contexts/cartContext';
 
 export default function OrderDetails() {
   const {
-    orderIdentifier, setOrderDetails, orderDetails, setShoppingCart,
+    orderIdentifier, setOrderDetails, orderDetails,
   } = useContext(CartContext);
   const INITIAL_VALUE = 0;
 
@@ -22,12 +22,6 @@ export default function OrderDetails() {
 
   useEffect(() => {
     getOrderById();
-    setShoppingCart(
-      {
-        items: [],
-        total: 0,
-      },
-    );
   }, []);
 
   return (
@@ -57,7 +51,7 @@ export default function OrderDetails() {
                 </ProductTitleQty>
                 <ProductPrice>
                   <p>
-                    {item.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    {(item.price * item.qty).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                   </p>
                 </ProductPrice>
               </OrderProducts>

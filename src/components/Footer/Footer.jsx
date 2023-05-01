@@ -1,11 +1,12 @@
+// PACKAGE IMPORTS
 import React from 'react';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+// VALUE IMPORTS
 import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
-//  OBS: Trocar a primeira <div></div> que fecha a <p>Protudos</p> por <Link to=""></Link>
-//  quando rota de produtos estiver pronta
-
+// VALUE EXPORTS
 export default function Footer() {
   return (
     <FooterContainer>
@@ -21,6 +22,7 @@ export default function Footer() {
   );
 }
 
+// STYLED COMPONENTS
 const FooterContainer = styled.div`
   position: fixed;
   display: flex;
