@@ -2,20 +2,33 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 import { FaTrashAlt, FaPlusCircle, FaMinusCircle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import CartContext from '../../contexts/cartContext';
+import { useAddOrder } from '../../services/auth';
 
 export default function ShoppingCart() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const { shoppingCart, setShoppingCart } = useContext(CartContext);
+  const navigate = useNavigate();
+  const addOrder = useAddOrder();
+  const initialValue = 0;
+  const totalPrice = shoppingCart.items.reduce(
+    (accumulator, item) => accumulator + (item.price * item.qty),
+    initialValue,
+  );
+
   const MIN_QTY = 1;
 
   function increaseQty(id) {
     const add = shoppingCart.items.map(
       (item) => {
         if (item.id === id) {
-          return ({ ...item, qty: item.qty + MIN_QTY });
+          return ({
+            ...item,
+            qty: item.qty + MIN_QTY,
+          });
         }
         return ({ ...item });
       },
@@ -26,6 +39,7 @@ export default function ShoppingCart() {
 
   function removeFromCart(id) {
     const filter = shoppingCart.items.filter((object) => object.id !== id);
+
     setShoppingCart({ ...shoppingCart, items: filter });
   }
 
@@ -49,11 +63,33 @@ export default function ShoppingCart() {
     setShoppingCart({ ...shoppingCart, items: red });
   }
 
-  const initialValue = 0;
-  const totalPrice = shoppingCart.items.reduce(
-    (accumulator, item) => accumulator + (item.price * item.qty),
-    initialValue,
-  );
+  function addMoreProducts() {
+    handleClose();
+    navigate('/');
+  }
+
+  function finishOrder() {
+    if (shoppingCart.items.length === 0) {
+      // eslint-disable-next-line no-alert
+      alert('O carrinho não pode estar vazio. Por favor adicione mais produtos.');
+      return;
+    }
+
+    if (!localStorage.getItem('user')) {
+      handleClose();
+      navigate('/sign-in');
+      return;
+    }
+
+    const body = { items: shoppingCart.items, total: totalPrice };
+    const userData = JSON.parse(localStorage.getItem('user'));
+    const config = { headers: { Authorization: `Bearer ${userData.token}` } };
+
+    // eslint-disable-next-line no-console
+    console.log(body, config);
+    addOrder(body, config);
+    handleClose();
+  }
 
   return (
     <>
@@ -94,10 +130,10 @@ export default function ShoppingCart() {
             </p>
           </Total>
           <ShoppingCartBottomMenu>
-            <Finalizar type="button" onClick={handleClose}>
+            <Finalizar type="button" onClick={() => finishOrder()}>
               <p>Finalizar</p>
             </Finalizar>
-            <Close type="button" onClick={handleClose}>
+            <Close type="button" onClick={() => addMoreProducts()}>
               <Voltar>Adicionar mais produtos</Voltar>
             </Close>
           </ShoppingCartBottomMenu>
