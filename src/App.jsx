@@ -15,7 +15,6 @@ export default function App() {
   const [shoppingCart, setShoppingCart] = useState(
     {
       items: [],
-      total: 0,
     },
   );
 
@@ -29,8 +28,8 @@ export default function App() {
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
-        <Footer />
       </CartContext.Provider>
     ), [shoppingCart, setShoppingCart])
   );

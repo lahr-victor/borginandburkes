@@ -14,25 +14,23 @@ export default function ShoppingCart() {
   function increaseQty(id) {
     const add = shoppingCart.items.map(
       (item) => {
-        if (item.productId === id) {
+        if (item.id === id) {
           return ({ ...item, qty: item.qty + MIN_QTY });
         }
         return ({ ...item });
       },
     );
-    const sum = add.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
 
-    setShoppingCart({ ...shoppingCart, items: add, total: sum });
+    setShoppingCart({ ...shoppingCart, items: add });
   }
 
   function removeFromCart(id) {
-    const filter = shoppingCart.items.filter((object) => object.productId !== id);
-    const sum = filter.reduce((acc, object) => acc + (object.price * object.qty), 0);
-    setShoppingCart({ ...shoppingCart, items: filter, total: sum });
+    const filter = shoppingCart.items.filter((object) => object.id !== id);
+    setShoppingCart({ ...shoppingCart, items: filter });
   }
 
   function decreaseQty(id) {
-    const query = shoppingCart.items.find((item) => item.productId === id);
+    const query = shoppingCart.items.find((item) => item.id === id);
 
     if (query.qty <= MIN_QTY) {
       removeFromCart(id);
@@ -41,16 +39,21 @@ export default function ShoppingCart() {
 
     const red = shoppingCart.items.map(
       (item) => {
-        if (item.productId === id) {
+        if (item.id === id) {
           return ({ ...item, qty: item.qty - MIN_QTY });
         }
         return ({ ...item });
       },
     );
-    const sum = red.reduce((accumulator, object) => accumulator + (object.price * object.qty), 0);
 
-    setShoppingCart({ ...shoppingCart, items: red, total: sum });
+    setShoppingCart({ ...shoppingCart, items: red });
   }
+
+  const initialValue = 0;
+  const totalPrice = shoppingCart.items.reduce(
+    (accumulator, item) => accumulator + (item.price * item.qty),
+    initialValue,
+  );
 
   return (
     <>
@@ -63,7 +66,7 @@ export default function ShoppingCart() {
           <ul>
             {shoppingCart.items.length > 0
               ? shoppingCart.items.map((object) => (
-                <ShoppingCartItem key={object.productId}>
+                <ShoppingCartItem key={object.id}>
                   <LeftElements>
                     <p>{object.title}</p>
                     <p>
@@ -71,16 +74,15 @@ export default function ShoppingCart() {
                       {object.qty}
                     </p>
                     <PlusMinusItem>
-                      <FaMinusCircle onClick={() => decreaseQty(object.productId)} />
-                      <FaPlusCircle onClick={() => increaseQty(object.productId)} />
+                      <FaMinusCircle onClick={() => decreaseQty(object.id)} />
+                      <FaPlusCircle onClick={() => increaseQty(object.id)} />
                     </PlusMinusItem>
                   </LeftElements>
                   <RightElements>
                     <p>
-                      R$&nbsp;
-                      {object.price}
+                      {(object.price * object.qty).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                     </p>
-                    <FaTrashAlt onClick={() => removeFromCart(object.productId)} />
+                    <FaTrashAlt onClick={() => removeFromCart(object.id)} />
                   </RightElements>
                 </ShoppingCartItem>
               )) : <p>Não há produtos no carrinho ainda.</p>}
@@ -88,8 +90,7 @@ export default function ShoppingCart() {
           <Total>
             <p>Total</p>
             <p>
-              R$&nbsp;
-              {shoppingCart.total}
+              {totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </Total>
           <ShoppingCartBottomMenu>
