@@ -61,7 +61,7 @@ export default function ShoppingCart() {
         <ModalWidow>
           <CartTitle>Carrinho de compras:</CartTitle>
           <ul>
-            { shoppingCart.items.length > 0
+            {shoppingCart.items.length > 0
               ? shoppingCart.items.map((object) => (
                 <ShoppingCartItem key={object.productId}>
                   <LeftElements>

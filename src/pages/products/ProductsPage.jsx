@@ -14,6 +14,7 @@ export default function ProductsPage() {
   function retrieveProducts() {
     axios.get(`${REACT_APP_API_URL}/products`)
       .then((response) => {
+        // eslint-disable-next-line no-console
         setProducts(response.data);
       })
 
@@ -32,13 +33,14 @@ export default function ProductsPage() {
       {products.map((product) => (
         <Product
           // eslint-disable-next-line no-underscore-dangle
+          key={product._id.toString()}
+          // eslint-disable-next-line no-underscore-dangle
           id={product._id.toString()}
           title={product.title}
           image={product.image}
           price={product.price}
         />
       ))}
-      <Product />
     </ProductsContainer>
   );
 }
@@ -46,7 +48,10 @@ export default function ProductsPage() {
 // STYLED COMPONENTS
 const ProductsContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   margin-top: 105px;
+  margin-bottom: 70px;
   justify-content: center;
+  overflow: scroll;
 `;

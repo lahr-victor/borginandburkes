@@ -5,6 +5,9 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
+  body {
+    background-color: #E5E5E5;
+  }
   form {
       display: flex;
       flex-direction: column;
@@ -30,8 +33,9 @@ const GlobalStyle = createGlobalStyle`
     background-color: #3A3A3A;
     color: #F9F9F9;
     font-family: 'Lora';
-    font-size:20px;
-    font-weight:400;
+    font-size: 20px;
+    font-weight: 400;
+    cursor: pointer;
   }
   a {
         font-weight: 400;

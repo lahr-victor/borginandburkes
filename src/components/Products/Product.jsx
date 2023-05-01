@@ -56,23 +56,56 @@ export default function Product({
       <h2>{title}</h2>
       <img src={image} alt={title} />
       <p>
-        {price}
-        <CartButton type="button" onClick={() => addToCart()}>
-          <IoMdCart />
-        </CartButton>
+        {price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
       </p>
+      <CartButton type="button" onClick={() => addToCart()}>
+        <IoMdCart />
+      </CartButton>
     </ProductContainer>
   );
 }
 
 // STYLED COMPONENTS
-const CartButton = styled.button`
-cursor:pointer;
-`;
-
 const ProductContainer = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-background-color: blue;
+padding-top: 20px;
+padding-bottom: 0px;
+padding-left: 30px;
+padding-right: 30px;
+  h2 {
+    font-weight: 700;
+    font-size: 16px;
+    color: #1C1C1C;
+    margin-bottom: 10px;
+    width: 125px;
+    height: 40px;
+    line-height: 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    text-align: center;
+  }
+  img {
+    width: 125px;
+    height: 125px;
+    margin-bottom: 10px;
+    object-fit: cover;
+    border-radius: 100px;
+    border: solid 2px #3A3A3A;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  }
+  p {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1C1C1C;
+  }
+`;
+
+const CartButton = styled.button`
+cursor:pointer;
+background-color: #E5E5E5;
+color: #1C1C1C;
+font-size: 30px;
 `;
