@@ -47,8 +47,6 @@ export default function Product({
         items: [...shoppingCart.items, newItem],
       });
     }
-    // eslint-disable-next-line no-console
-    console.log(shoppingCart);
   }
 
   return (
