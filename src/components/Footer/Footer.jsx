@@ -8,6 +8,9 @@ import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 // VALUE EXPORTS
 export default function Footer() {
+  const user = localStorage.getItem('user');
+  const userType = user ? JSON.parse(user).userType : 'user';
+
   return (
     <FooterContainer>
       <div>
@@ -16,7 +19,13 @@ export default function Footer() {
         </Link>
       </div>
       <div>
-        <ShoppingCart />
+        {
+          userType === 'admin' ? (
+            <Link to="/product-registration">
+              <p>Registrar</p>
+            </Link>
+          ) : <ShoppingCart />
+        }
       </div>
     </FooterContainer>
   );

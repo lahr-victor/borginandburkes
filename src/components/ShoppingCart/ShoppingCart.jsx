@@ -85,8 +85,6 @@ export default function ShoppingCart() {
     const userData = JSON.parse(localStorage.getItem('user'));
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
-    // eslint-disable-next-line no-console
-    console.log(body, config);
     addOrder(body, config);
     handleClose();
   }
@@ -118,14 +116,21 @@ export default function ShoppingCart() {
                     <p>
                       {(object.price * object.qty).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                     </p>
-                    <FaTrashAlt onClick={() => removeFromCart(object.id)} />
+                    <FaTrashAlt
+                      onClick={() => removeFromCart(object.id)}
+                      cursor="pointer"
+                    />
                   </RightElements>
                 </ShoppingCartItem>
               )) : <p>Não há produtos no carrinho ainda.</p>}
           </ul>
           <Total>
-            <p>Total</p>
             <p>
+              <br />
+              Total
+            </p>
+            <p>
+              <br />
               {totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </Total>

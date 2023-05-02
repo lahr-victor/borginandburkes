@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { MdLogout } from 'react-icons/md';
+import { MdLogout, MdPerson } from 'react-icons/md';
 import UserNameContext from '../../contexts/userNameContext';
 
 export default function Header() {
@@ -30,28 +30,32 @@ export default function Header() {
           Borgin &  Burkes
         </Logo>
       </HeaderLogo>
-      {userName
-        ? (
-          <HeaderMenu>
-            <div>
-              <p>
-                Olá,
-                {' '}
-                {userName.name}
-              </p>
-            </div>
-            {/* eslint-disable-next-line react/jsx-no-bind */}
-            <MdLogout onClick={logout} />
-          </HeaderMenu>
+
+      <HeaderMenu>
+        <MdPerson
+          fontSize="20px"
+        />
+        {userName ? (
+          <div>
+            <p>
+              Olá,
+              {' '}
+              {userName.name}
+            </p>
+            <MdLogout
+              onClick={() => logout()}
+              fontSize="20px"
+              cursor="pointer"
+            />
+          </div>
         ) : (
-          <HeaderMenu>
-            <div>
-              <Link to="/sign-in">Entre</Link>
-              ou
-              <Link to="/sign-up">Cadastre-se</Link>
-            </div>
-          </HeaderMenu>
+          <div>
+            <Link to="/sign-in">Entre</Link>
+            ou
+            <Link to="/sign-up">Cadastre-se</Link>
+          </div>
         )}
+      </HeaderMenu>
     </HeaderContainer>
   );
 }
@@ -73,30 +77,34 @@ const HeaderLogo = styled.div`
 
 const Logo = styled.p`
     color: #F9F9F9;
-    font-family: 'Libre Baskerville';
+    font-family: 'Libre Baskerville', serif;
     font-style: italic;
     font-weight: 400;
-    font-size: 35px;    
+    font-size: 40px;    
 `;
 
 const HeaderMenu = styled.div`
     height: 35px;
     background-color: #3A3A3A;
     color: #f9f9f9;
-    display:flex;
+    display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap:20px;
-    padding:10px;
-    font-size:15px;
+    padding: 10px 20px;
+    font-size: 15px;
     line-height: 18px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     div {
       display:flex;
       gap: 5px;
+      margin-left: 5px;
+      p {
+        margin-right: 20px;
+      }
     }
     a {
       color: #f9f9f9;
-      padding-top:0px;
-      font-size:15px;
+      padding-top: 0px;
+      font-size: 15px;
     }
 `;
