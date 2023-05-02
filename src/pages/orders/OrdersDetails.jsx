@@ -28,7 +28,7 @@ export default function OrderDetails() {
       return;
     }
     getOrderById();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -106,7 +106,9 @@ p{
 const OrderProducts = styled.div`
 display: flex;
 justify-content: space-between;
-margin-bottom: 10px;`;
+margin-bottom: 10px;
+gap: 10px;
+`;
 
 const OrderTotal = styled.div`
 display: flex;

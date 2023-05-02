@@ -25,7 +25,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     retrieveProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -51,7 +51,7 @@ const ProductsContainer = styled.div`
   flex-wrap: wrap;
   width: 100%;
   margin-top: 105px;
-  margin-bottom: 70px;
+  margin-bottom: 90px;
   justify-content: center;
   overflow: scroll;
 `;
