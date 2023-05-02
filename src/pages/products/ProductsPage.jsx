@@ -14,7 +14,6 @@ export default function ProductsPage() {
   function retrieveProducts() {
     axios.get(`${REACT_APP_API_URL}/products`)
       .then((response) => {
-        // eslint-disable-next-line no-console
         setProducts(response.data);
       })
 
@@ -26,6 +25,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     retrieveProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

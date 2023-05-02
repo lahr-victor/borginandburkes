@@ -18,6 +18,7 @@ export default function ShoppingCart() {
     (accumulator, item) => accumulator + (item.price * item.qty),
     initialValue,
   );
+  const [disabled, setDisabled] = useState(false);
 
   const MIN_QTY = 1;
 
@@ -69,24 +70,27 @@ export default function ShoppingCart() {
   }
 
   function finishOrder() {
+    setDisabled(true);
     if (shoppingCart.items.length === 0) {
+      setDisabled(false);
       // eslint-disable-next-line no-alert
       alert('O carrinho não pode estar vazio. Por favor adicione mais produtos.');
       return;
     }
 
     if (!localStorage.getItem('user')) {
+      setDisabled(false);
       handleClose();
       navigate('/sign-in');
       return;
     }
 
+    setDisabled(false);
+
     const body = { items: shoppingCart.items, total: totalPrice };
     const userData = JSON.parse(localStorage.getItem('user'));
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
-    // eslint-disable-next-line no-console
-    console.log(body, config);
     addOrder(body, config);
     handleClose();
   }
@@ -130,10 +134,10 @@ export default function ShoppingCart() {
             </p>
           </Total>
           <ShoppingCartBottomMenu>
-            <Finalizar type="button" onClick={() => finishOrder()}>
-              <p>Finalizar</p>
+            <Finalizar type="button" disabled={disabled} onClick={() => finishOrder()}>
+              {disabled ? <p>Carregando...</p> : <p>Finalizar</p>}
             </Finalizar>
-            <Close type="button" onClick={() => addMoreProducts()}>
+            <Close type="button" disabled={disabled} onClick={() => addMoreProducts()}>
               <Voltar>Adicionar mais produtos</Voltar>
             </Close>
           </ShoppingCartBottomMenu>
