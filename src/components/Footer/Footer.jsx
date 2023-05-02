@@ -9,7 +9,8 @@ import ShoppingCart from '../ShoppingCart/ShoppingCart';
 
 // VALUE EXPORTS
 export default function Footer() {
-  const userType = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).userType : 'user';
+  const user = localStorage.getItem('user');
+  const userType = user ? JSON.parse(user).userType : 'user';
 
   return (
     <FooterContainer>

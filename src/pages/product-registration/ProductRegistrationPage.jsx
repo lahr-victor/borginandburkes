@@ -16,8 +16,9 @@ export default function ProductRegistrationPage() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { REACT_APP_API_URL } = process.env;
-  const token = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).token : null;
-  const userType = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).userType : 'user';
+  const user = localStorage.getItem('user');
+  const token = user ? JSON.parse(user).token : null;
+  const userType = user ? JSON.parse(user).userType : 'user';
 
   function validateAccess() {
     if (userType !== 'admin') {
