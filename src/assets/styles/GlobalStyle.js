@@ -36,6 +36,9 @@ const GlobalStyle = createGlobalStyle`
     font-size: 20px;
     font-weight: 400;
     cursor: pointer;
+    &:disabled {
+      cursor: initial;
+    }
   }
   a {
         font-weight: 400;
