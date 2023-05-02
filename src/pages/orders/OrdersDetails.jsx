@@ -2,6 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import CartContext from '../../contexts/cartContext';
 
 export default function OrderDetails() {
@@ -9,6 +10,7 @@ export default function OrderDetails() {
     orderIdentifier, setOrderDetails, orderDetails,
   } = useContext(CartContext);
   const INITIAL_VALUE = 0;
+  const navigate = useNavigate();
 
   function getOrderById() {
     const userData = JSON.parse(localStorage.getItem('user'));
@@ -21,7 +23,12 @@ export default function OrderDetails() {
   }
 
   useEffect(() => {
+    if (!orderIdentifier) {
+      navigate('/');
+      return;
+    }
     getOrderById();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -41,7 +48,7 @@ export default function OrderDetails() {
         {orderDetails && orderDetails.length > 0
           ? orderDetails[INITIAL_VALUE].items.map(
             (item) => (
-              <OrderProducts key={item.productId}>
+              <OrderProducts key={item.id}>
                 <ProductTitleQty>
                   <p>{item.title}</p>
                   <p>

@@ -34,12 +34,17 @@ export function useSignIn() {
 
 export function useAddOrder() {
   const navigate = useNavigate();
-  const { setOrderIdentifier } = useContext(CartContext);
+  const { setOrderIdentifier, setShoppingCart } = useContext(CartContext);
 
   return (body, config) => {
     axios.post(`${process.env.REACT_APP_API_URL}/orders`, body, config)
       .then((res) => {
         setOrderIdentifier(res.data.insertedId);
+        setShoppingCart(
+          {
+            items: [],
+          },
+        );
         navigate('/order-details');
       })
       // eslint-disable-next-line no-alert

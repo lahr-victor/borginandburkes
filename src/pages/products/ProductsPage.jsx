@@ -25,6 +25,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     retrieveProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
