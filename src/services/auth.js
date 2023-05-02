@@ -27,7 +27,7 @@ export function useSignIn() {
         setUserName(JSON.parse(localStorage.getItem('user')));
         navigate('/');
       })
-    // eslint-disable-next-line no-alert
+      // eslint-disable-next-line no-alert
       .catch((err) => alert(err.response.data));
   };
 }
@@ -47,7 +47,7 @@ export function useAddOrder() {
         );
         navigate('/order-details');
       })
-    // eslint-disable-next-line no-alert
+      // eslint-disable-next-line no-alert
       .catch((err) => alert(err.response.data));
   };
 }
