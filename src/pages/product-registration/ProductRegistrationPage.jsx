@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 // PACKAGE IMPORTS
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';

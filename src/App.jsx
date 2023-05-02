@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
 // PACKAGE IMPORTS
 import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';

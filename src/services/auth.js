@@ -27,7 +27,7 @@ export function useSignIn() {
         setUserName(JSON.parse(localStorage.getItem('user')));
         navigate('/');
       })
-    // eslint-disable-next-line no-alert
+      // eslint-disable-next-line no-alert
       .catch((err) => alert(err.response.data));
   };
 }
@@ -39,11 +39,10 @@ export function useAddOrder() {
   return (body, config) => {
     axios.post(`${process.env.REACT_APP_API_URL}/orders`, body, config)
       .then((res) => {
-        // eslint-disable-next-line no-console
         setOrderIdentifier(res.data.insertedId);
         navigate('/order-details');
       })
-    // eslint-disable-next-line no-alert
+      // eslint-disable-next-line no-alert
       .catch((err) => alert(err.response.data));
   };
 }

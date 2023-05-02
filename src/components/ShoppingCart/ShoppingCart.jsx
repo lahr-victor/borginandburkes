@@ -85,8 +85,6 @@ export default function ShoppingCart() {
     const userData = JSON.parse(localStorage.getItem('user'));
     const config = { headers: { Authorization: `Bearer ${userData.token}` } };
 
-    // eslint-disable-next-line no-console
-    console.log(body, config);
     addOrder(body, config);
     handleClose();
   }
