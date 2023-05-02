@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom/client';
 
 // VALUE IMPORTS
 import App from './App';
-import GlobalStyle from './assets/styles/GlobalStyle';
 import ResetStyle from './assets/styles/ResetStyle';
+import GlobalStyle from './assets/styles/GlobalStyle';
 
 // GLOBAL CONSTANTS
 const root = ReactDOM.createRoot(document.getElementById('root'));
